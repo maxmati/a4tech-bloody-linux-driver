@@ -11,9 +11,10 @@ static const int A4TECH_VID = 0x09da;
 
 static const int BLOODY_V5_PID = 0x172A;
 static const int BLOODY_V7_PID = 0xF613;
+static const int BLOODY_V8_PID = 0x11F5;
 static const int BLOODY_R7_PID = 0x1485;
 
-static const int COMPATIBLE_PIDS[] = {BLOODY_V5_PID, BLOODY_V7_PID, BLOODY_R7_PID};
+static const int COMPATIBLE_PIDS[] = {BLOODY_V5_PID, BLOODY_V7_PID, BLOODY_V8_PID, BLOODY_R7_PID};
 static const size_t COMPATIBLE_PIDS_SIZE = sizeof(COMPATIBLE_PIDS)/sizeof(COMPATIBLE_PIDS[0]);
 
 static const int A4TECH_MAGIC = 0x07;
