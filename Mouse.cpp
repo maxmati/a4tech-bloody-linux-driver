@@ -157,6 +157,9 @@ void Mouse::listDevices() {
             case BLOODY_AL9_PID:
                 name = "Bloody AL9";
                 break;
+            case BLOODY_R70_PID:
+                name = "Bloody R70";
+                break;
             default:
                 name = "Unknown";
         }
