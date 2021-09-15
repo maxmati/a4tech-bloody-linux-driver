@@ -33,8 +33,22 @@ void Mouse::discoverDevices() {
         libusb_device_descriptor desc;
         libusb_get_device_descriptor(devs[i], &desc);
         if (isCompatibleDevice(desc)) {
-            if(libusb_open(devs[i], &currentDevice) != 0)
-                continue;
+            switch (int status = libusb_open(devs[i], &currentDevice)) {
+                case 0:
+                    break;
+                case LIBUSB_ERROR_NO_MEM:
+                    cout << "LIBUSB_ERROR_NO_MEM" << endl;
+                    continue;
+                case LIBUSB_ERROR_ACCESS:
+                    cout << "LIBUSB_ERROR_ACCESS" << endl;
+                    continue;
+                case LIBUSB_ERROR_NO_DEVICE:
+                    cout << "LIBUSB_ERROR_NO_DEVICE" << endl;
+                    continue;
+                default:
+                    cout << "Status: " << status << endl;
+                    continue;
+            }
 
             if(libusb_kernel_driver_active(currentDevice, 2) == 1)
                 if(libusb_detach_kernel_driver(currentDevice, 2) != 0) {
@@ -90,14 +104,26 @@ int Mouse::setBackLightLevel(uint8_t level) {
 }
 
 int Mouse::writeToMouse(uint8_t data[], size_t size) {
-    int res =  libusb_control_transfer(currentDevice,0x21,9,
-                                       0x0307,2,data,size,10000);
-    if(res < 0){
-        cout<<"Unnable to send command"<<endl;
-        return -1;
+    int res = libusb_control_transfer(currentDevice, 0x21, 9,
+                                      0x0307, 2, data, size, 10000);
+    switch (res){
+        case LIBUSB_ERROR_TIMEOUT:
+            cout << "LIBUSB_ERROR_TIMEOUT" << endl;
+            return -1;
+        case LIBUSB_ERROR_PIPE:
+            cout << "LIBUSB_ERROR_PIPE" << endl;
+            return -1;
+        case LIBUSB_ERROR_NO_DEVICE:
+            cout << "LIBUSB_ERROR_NO_DEVICE" << endl;
+            return -1;
+        case LIBUSB_ERROR_BUSY:
+            cout << "LIBUSB_ERROR_BUSY" << endl;
+            return -1;
+        case LIBUSB_ERROR_INVALID_PARAM:
+            cout << "LIBUSB_ERROR_INVALID_PARAM" << endl;
+        default:
+            return 0;
     }
-
-    return 0;
 }
 
 int Mouse::readFromMouse(uint8_t *request, size_t requestSize, uint8_t *response, size_t responseSize) {
