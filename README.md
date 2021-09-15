@@ -14,7 +14,21 @@ cmake .
 make
 ```
 
-# Usage
+## Add new bloody devices
+
+1. Get USB PID of device:
+```
+~$ lsusb -d 09da: | cut -d ' ' -f6 | cut -d ':' -f2
+```
+
+2. Add that PID to Mouce.h & Mouce.cpp
+
+Mouse.h: add line with PID and add name to COMPATIBLE_PIDS variable as all the other mouses.
+
+Mouse.cpp: add 3 lines: case, name and break; as all the other mouses.
+
+
+## Run
 ```
 sudo ./bloody
 Available devices:
