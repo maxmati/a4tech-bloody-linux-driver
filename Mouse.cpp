@@ -200,7 +200,7 @@ void Mouse::listDevices() {
                 break;
             case BLOODY_V8M_PID:
                 name = "Bloody V8M";
-            break;
+                break;
             case BLOODY_R8_PID:
                 name = "Bloody R8";
                 break;
