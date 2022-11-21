@@ -21,7 +21,7 @@ make
 ~$ lsusb -d 09da: | cut -d ' ' -f6 | cut -d ':' -f2
 ```
 
-2. Add that PID to Mouce.h & Mouce.cpp
+2. Add that PID to Mouse.h & Mouse.cpp
 
 Mouse.h: add line with PID and add name to COMPATIBLE_PIDS variable as all the other mouses.
 
